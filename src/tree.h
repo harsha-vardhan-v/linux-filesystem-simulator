@@ -3,7 +3,7 @@
 
 typedef struct node{
     char *name;
-    node *parent, *child, *sibling;
+    struct node *parent, *child, *sibling;
 } node_t;
 
 #endif
