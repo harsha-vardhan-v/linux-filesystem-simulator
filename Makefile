@@ -6,4 +6,4 @@ bin/cli_tools.o: src/cli_tools.h src/cli_tools.c
 	gcc -c src/cli_tools.c -o bin/cli_tools.o
 
 clean:
-	rm fileSystem
+	rm -rf bin/*
