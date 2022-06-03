@@ -9,7 +9,7 @@
 
 node_t *root, *cwd;
 
-int main (int argc, char *argv)
+int main (int argc, char *argv[])
 {
     while(true) {
         prompt();
