@@ -28,8 +28,8 @@ all: $(OBJECTS) main.c
 remake: cleaner all
 
 #Create object files
-%.o: $(SRCDIR)/%.c $(SRCDIR)/%.h
-	$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$@
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(SRCDIR)/%.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 #Clean only objects
 clean:
