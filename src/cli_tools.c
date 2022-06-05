@@ -2,7 +2,8 @@
 
 char line[LINE_LENGTH], command[COMMAND_LENGTH], path[PATH_LENGTH];
 
-char *cmd[] = {"mkdir", "rmdir", "cd", "ls", "pwd", "touch", "rm", "save", "reload", "menu", "quit"};
+char *cmd[] = { "mkdir", "rmdir", "cd", "ls", "pwd", "touch", "rm", "save", "reload", "menu", "quit" };
+int (*fptr[]) (char *) = { (int (*) ()) mkdir, rmdir, cd, ls, pwd, touch, rm, save, reload, menu };
 
 void prompt (void)
 {

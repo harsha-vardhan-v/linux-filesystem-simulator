@@ -17,7 +17,7 @@ int main (int argc, char *argv[])
         if (strcmp(line, "quit") == 0)
             break;
 
-        printf("command: %s, command index: %d, pathname: %s\n", command, find_cmd(command), path);
+        fptr[find_cmd(command)] (path);
     }
     
     return EXIT_SUCCESS;
