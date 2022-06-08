@@ -9,11 +9,12 @@
 #define LINE_LENGTH 128
 #define COMMAND_LENGTH 16
 #define PATH_LENGTH 64
+#define FPTR_LENGTH 10
 
 extern char line[LINE_LENGTH], command[COMMAND_LENGTH], path[PATH_LENGTH];
 extern int (*fptr[]) (char *);
 
-void prompt (void);
+void prompt ();
 int find_cmd (char *command);
 
 

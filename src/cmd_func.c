@@ -28,9 +28,19 @@ int ls (void)
     return 0;
 }
 
-int pwd (void)
+int pwd ()
 {
-    printf("pwd\n");
+    char *name = (char *) malloc(64 * sizeof(char));
+    name[0] = '\0';
+
+    get_cwd_name(name);
+
+    if (name[0] == '\0') {
+        printf("Error: Unable to get the current working directory\n");
+    }
+
+    printf("Present working directory: %s\n", name);
+    free(name);
 
     return 0;
 }
@@ -66,15 +76,17 @@ int reload (char *filename)
 int menu (void)
 {
     printf("\n\tCommands available\n");
-    printf("mkdir\n");
-    printf("rmdir\n");
-    printf("cd\n");
-    printf("ls\n");
-    printf("pwd\n");
-    printf("touch\n");
-    printf("rm\n");
-    printf("save\n");
-    printf("reload\n");
+    printf("1) mkdir\n");
+    printf("2) rmdir\n");
+    printf("3) cd\n");
+    printf("4) ls\n");
+    printf("5) pwd\n");
+    printf("6) touch\n");
+    printf("7) rm\n");
+    printf("8) save\n");
+    printf("9) reload\n");
+    printf("10) menu\n");
+    printf("11) quit\n");
 
     return 0;
 }
