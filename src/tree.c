@@ -25,3 +25,83 @@ void get_cwd_name (char *name)
 {
     strcpy(name, cwd->name);
 }
+
+node_t* search_siblings (node_t *node, char *name)
+{
+    node_t *sib_node = node;
+
+    while (sib_node) {
+        if (strcmp(name, sib_node->name) == 0) {
+            sib_node = (sib_node->type == F) ? NULL : sib_node;
+            break;
+        }
+
+        sib_node = sib_node->sibling;
+    }
+
+    return sib_node;
+}
+
+node_t* search_cwd (char *path)
+{
+    return search_siblings (cwd, path);
+}
+
+node_t* search_for_node (char *path)
+{
+    node_t *node = cwd;
+    if (path[0] == '/')
+        node = root;
+
+    printf("Reached if, path=%s\n", path);
+    //strtok is used to tokenize the string with the occurrences of /
+    char *name;
+    name = strtok(path, "/"); //Segmentation fault in strtok
+    printf("name: %s", name);
+
+    while (name && node) {
+        if (strcmp(name, "..") == 0) {
+            node = node->parent;
+        } else {
+            node = search_siblings(node->child, name);
+        }
+
+        strtok(NULL, "/");
+    }
+
+    return node;
+}
+
+int make_directory (node_t *node, char *dir_name)
+{
+    //Errors
+    if (node == NULL) {
+        printf ("Error: Invalid path\n");
+        return -1;
+    } else if (search_siblings(node->child, dir_name) != NULL) {
+        printf ("Error: Already exists\n");
+        return -1;
+    }
+
+    //Actual function
+    node_t *new_dir = create_node(dir_name, D);
+    new_dir->parent = node;
+
+    if (!node->child) {
+        node->child = new_dir;
+    } else {
+        node = node->child;
+
+        while (node->sibling)
+            node = node->sibling;
+
+        node->sibling = new_dir;
+    }
+
+    return 0;
+}
+
+int make_directory_in_cwd (char *dir_name)
+{
+    return make_directory (cwd, dir_name);
+}

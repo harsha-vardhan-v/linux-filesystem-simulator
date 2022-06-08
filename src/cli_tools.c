@@ -8,7 +8,7 @@ int (*fptr[]) (char *) = { (int (*) ()) mkdir, rmdir, cd, ls, pwd, touch, rm, sa
 void prompt (node_t *cwd)
 {
     printf(">> ");
-    fgets(line, COMMAND_LENGTH, stdin);
+    fgets(line, LINE_LENGTH, stdin);
     line[strlen(line) - 1] = '\0';
 
     sscanf(line, "%s %s", command, path);

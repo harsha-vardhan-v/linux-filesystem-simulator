@@ -2,7 +2,43 @@
 
 int mkdir (char *path)
 {
-    printf("mkdir\n");
+    if (strlen(path) == 0) {
+        printf ("Error: Invalid path\n");
+        return -1;
+    }
+
+    // Returns pointer of the last occurence of /
+    char *basename = strrchr(path, '/');
+
+    if (!basename) {
+        printf("path: \n");
+        printf("basename: %s\n", path);
+        make_directory_in_cwd(path);
+        printf("Created directory\n");
+    } else {
+        //Currently basename points to the last / character
+        //Make the / to '\0' and then increment basename pointer
+        //This creates two strings path - with everything before the / and basename - with everything after the /
+        *basename = '\0';
+        basename++;
+
+        printf("path: %s\n", path ? path : "/");
+        printf("basename: %s\n", basename);
+
+        // If path becomes '\0' then it means that first / is the last occurence that means path has to be /
+        node_t *to_create = search_for_node(path ? path : "/");
+
+        printf("Got node with name: %s\n", to_create->name);
+
+        if (to_create == NULL) {
+            printf ("Error: Invalid path\n");
+            return -1;
+        }
+
+        //Insert node
+        make_directory(to_create, basename);
+        printf("Created directory\n");
+    }
 
     return 0;
 }
