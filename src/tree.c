@@ -53,11 +53,9 @@ node_t* search_for_node (char *path)
     if (path[0] == '/')
         node = root;
 
-    printf("Reached if, path=%s\n", path);
     //strtok is used to tokenize the string with the occurrences of /
     char *name;
-    name = strtok(path, "/"); //Segmentation fault in strtok
-    printf("name: %s", name);
+    name = strtok(path, "/");
 
     while (name && node) {
         if (strcmp(name, "..") == 0) {
@@ -66,7 +64,7 @@ node_t* search_for_node (char *path)
             node = search_siblings(node->child, name);
         }
 
-        strtok(NULL, "/");
+        name = strtok(NULL, "/");
     }
 
     return node;

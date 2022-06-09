@@ -22,5 +22,6 @@ node_t* search_for_node (char *path);
 int make_directory (node_t *node, char *dir_name);
 int make_directory_in_cwd (char *dir_name);
 void list_directory (char *path);
+int tokenize (char *path);
 
 #endif
