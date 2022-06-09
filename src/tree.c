@@ -104,13 +104,19 @@ int make_directory_in_cwd (char *dir_name)
     return make_directory (cwd, dir_name);
 }
 
-void list_directory (char *path)
+int list_directory (char *path)
 {
-    node_t *node = cwd->child;
+    node_t *node = cwd;
 
-    // if (path) {
+    if (path)
+        node = search_for_node (path);
 
-    // }
+    if (node == NULL) {
+        printf("Error: Invalid path\n");
+        return -1;
+    }
+
+    node = node->child;
 
     while (node) {
         printf("%s: %c  ", node->name, (node->type == D) ? 'D' : 'F');
@@ -119,4 +125,6 @@ void list_directory (char *path)
     }
 
     printf("\n");
+
+    return 0;
 }

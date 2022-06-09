@@ -57,12 +57,9 @@ int cd (char *path)
     return 0;
 }
 
-int ls (void)
+int ls (char *path)
 {
-    printf("ls\n");
-    list_directory("");
-
-    return 0;
+    return list_directory(path);
 }
 
 int pwd ()

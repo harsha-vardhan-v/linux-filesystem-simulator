@@ -23,7 +23,7 @@ int main (int argc, char *argv[])
             continue;
         }
 
-        fptr[find_cmd(command)] (path);
+        fptr[find_cmd(command)] (pathname);
     }
     
     return EXIT_SUCCESS;

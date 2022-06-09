@@ -8,7 +8,7 @@
 int mkdir (char *path);
 int rmdir (char *path);
 int cd (char *path);
-int ls (void);
+int ls (char *path);
 int pwd ();
 int touch (char *path);
 int rm (char *path);
