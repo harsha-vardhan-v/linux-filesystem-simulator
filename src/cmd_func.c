@@ -60,6 +60,7 @@ int cd (char *path)
 int ls (void)
 {
     printf("ls\n");
+    list_directory("");
 
     return 0;
 }

@@ -9,7 +9,7 @@ node_t* create_node (char *name, file_type_t type)
 
     node->parent = node->child = node->sibling = NULL;
     
-    strcpy(node->name, "/");
+    strcpy(node->name, name);
     node->type = type;
 
     return node;
@@ -104,4 +104,21 @@ int make_directory (node_t *node, char *dir_name)
 int make_directory_in_cwd (char *dir_name)
 {
     return make_directory (cwd, dir_name);
+}
+
+void list_directory (char *path)
+{
+    node_t *node = cwd->child;
+
+    // if (path) {
+
+    // }
+
+    while (node) {
+        printf("%s: %c  ", node->name, (node->type == D) ? 'D' : 'F');
+
+        node = node->sibling;
+    }
+
+    printf("\n");
 }
