@@ -21,9 +21,9 @@ void init ()
     cwd = root;
 }
 
-void get_cwd_name (char *name)
+void get_cwd_path (char *path)
 {
-    strcpy(name, cwd->name);
+    strcpy(path, cwd->name);
 }
 
 node_t* search_siblings (node_t *node, char *name)
@@ -72,7 +72,7 @@ node_t* search_for_node (char *path)
 
 int make_directory (node_t *node, char *dir_name)
 {
-    //Errors
+    //Checking for Errors
     if (node == NULL) {
         printf ("Error: Invalid path\n");
         return -1;
@@ -108,7 +108,7 @@ int list_directory (char *path)
 {
     node_t *node = cwd;
 
-    if (path)
+    if (strlen(path) != 0)
         node = search_for_node (path);
 
     if (node == NULL) {
@@ -120,11 +120,31 @@ int list_directory (char *path)
 
     while (node) {
         printf("%s: %c  ", node->name, (node->type == D) ? 'D' : 'F');
-
         node = node->sibling;
     }
 
     printf("\n");
+
+    return 0;
+}
+
+int change_directory (char *path)
+{
+    node_t *node;
+
+    if (strlen(path) != 0) {
+        node = search_for_node (path);
+    }
+    else
+        node = root;
+
+    if (node == NULL) {
+        printf("Error: Invalid path\n");
+        return -1;
+    }
+
+    cwd = node;
+    printf("Changed to %s\n", cwd->name);
 
     return 0;
 }

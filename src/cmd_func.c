@@ -52,9 +52,7 @@ int rmdir (char *path)
 
 int cd (char *path)
 {
-    printf("cd\n");
-
-    return 0;
+    return change_directory(path);
 }
 
 int ls (char *path)
@@ -67,7 +65,7 @@ int pwd ()
     char *name = (char *) malloc(64 * sizeof(char));
     name[0] = '\0';
 
-    get_cwd_name(name);
+    get_cwd_path(name);
 
     if (name[0] == '\0') {
         printf("Error: Unable to get the current working directory\n");
