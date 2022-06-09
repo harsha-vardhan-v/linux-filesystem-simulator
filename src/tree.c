@@ -23,7 +23,24 @@ void init ()
 
 void get_cwd_path (char *path)
 {
-    strcpy(path, cwd->name);
+    node_t *node = cwd;
+
+    char *buffer = (char *) malloc(64 * sizeof(char));
+    buffer[0] = '\0';
+
+    while (node) {
+        if (strcmp(node->name, "/") == 0) {
+            sprintf(buffer, "/%s", path);
+            strcpy(path, buffer);
+        } else {
+            sprintf(buffer, "%s/%s", node->name, path);
+            strcpy(path, buffer);
+        }
+
+        node = node->parent;
+    }
+
+    free(buffer);
 }
 
 node_t* search_siblings (node_t *node, char *name)
