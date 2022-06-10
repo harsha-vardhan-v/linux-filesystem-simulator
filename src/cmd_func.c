@@ -11,7 +11,7 @@ int mkdir (char *path)
     char *basename = strrchr(path, '/');
 
     if (!basename) {
-        if (make_directory_in_cwd(path) == 0) {
+        if (insert_node_in_cwd(path, D) == 0) {
             printf("Created directory %s\n", path);
             return 0;
         }
@@ -33,9 +33,8 @@ int mkdir (char *path)
         }
 
         // //Insert node
-        if (make_directory(to_create, basename) == 0) {
+        if (insert_node(to_create, basename, D) == 0) {
             printf("Created directory %s\n", basename);
-
             return 0;
         }
     }

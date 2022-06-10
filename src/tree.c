@@ -87,38 +87,38 @@ node_t* search_for_node (char *path)
     return node;
 }
 
-int make_directory (node_t *node, char *dir_name)
+int insert_node (node_t *node, char *node_name, file_type_t node_type)
 {
     //Checking for Errors
     if (node == NULL) {
         printf ("Error: Invalid path\n");
         return -1;
-    } else if (search_siblings(node->child, dir_name) != NULL) {
+    } else if (search_siblings(node->child, node_name) != NULL) {
         printf ("Error: Already exists\n");
         return -1;
     }
 
     //Actual function
-    node_t *new_dir = create_node(dir_name, D);
-    new_dir->parent = node;
+    node_t *new_node = create_node(node_name, node_type);
+    new_node->parent = node;
 
     if (!node->child) {
-        node->child = new_dir;
+        node->child = new_node;
     } else {
         node = node->child;
 
         while (node->sibling)
             node = node->sibling;
 
-        node->sibling = new_dir;
+        node->sibling = new_node;
     }
 
     return 0;
 }
 
-int make_directory_in_cwd (char *dir_name)
+int insert_node_in_cwd (char *node_name, file_type_t node_type)
 {
-    return make_directory (cwd, dir_name);
+    return insert_node(cwd, node_name, node_type);
 }
 
 int list_directory (char *path)

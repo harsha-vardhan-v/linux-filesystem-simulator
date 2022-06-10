@@ -19,8 +19,8 @@ void get_cwd_path (char *path);
 node_t* create_node (char *name, file_type_t type);
 node_t* search_cwd (char *name);
 node_t* search_for_node (char *path);
-int make_directory (node_t *node, char *dir_name);
-int make_directory_in_cwd (char *dir_name);
+int insert_node (node_t *node, char *node_name, file_type_t node_type);
+int insert_node_in_cwd (char *node_name, file_type_t node_type);
 int list_directory (char *path);
 int change_directory (char *path);
 
