@@ -43,13 +43,13 @@ void get_cwd_path (char *path)
     free(buffer);
 }
 
-node_t* search_siblings (node_t *node, char *name)
+node_t* search_siblings (node_t *node, char *name, file_type_t type)
 {
     node_t *sib_node = node;
 
     while (sib_node) {
         if (strcmp(name, sib_node->name) == 0) {
-            sib_node = (sib_node->type == F) ? NULL : sib_node;
+            sib_node = (sib_node->type == type) ? sib_node : NULL;
             break;
         }
 
@@ -59,9 +59,9 @@ node_t* search_siblings (node_t *node, char *name)
     return sib_node;
 }
 
-node_t* search_cwd (char *path)
+node_t* search_cwd (char *path, file_type_t type)
 {
-    return search_siblings (cwd, path);
+    return search_siblings (cwd->child, path, type);
 }
 
 node_t* search_for_node (char *path)
@@ -78,7 +78,7 @@ node_t* search_for_node (char *path)
         if (strcmp(name, "..") == 0) {
             node = node->parent;
         } else {
-            node = search_siblings(node->child, name);
+            node = search_siblings(node->child, name, D);
         }
 
         name = strtok(NULL, "/");
@@ -93,7 +93,7 @@ int insert_node (node_t *node, char *node_name, file_type_t node_type)
     if (node == NULL) {
         printf ("Error: Invalid path\n");
         return -1;
-    } else if (search_siblings(node->child, node_name) != NULL) {
+    } else if (search_siblings(node->child, node_name, node_type) != NULL) {
         printf ("Error: Already exists\n");
         return -1;
     }
