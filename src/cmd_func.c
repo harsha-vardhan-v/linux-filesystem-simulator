@@ -1,6 +1,6 @@
 #include "cmd_func.h"
 
-int mkdir (char *path)
+int create_file (char *path, file_type_t type)
 {
     if (strlen(path) == 0) {
         printf ("Error: Invalid path\n");
@@ -11,8 +11,9 @@ int mkdir (char *path)
     char *basename = strrchr(path, '/');
 
     if (!basename) {
-        if (insert_node_in_cwd(path, D) == 0) {
-            printf("Created directory %s\n", path);
+        printf("if condition, %s\n", path);
+        if (insert_node_in_cwd(path, type) == 0) {
+            printf("Created %s %s\n", (type == D) ? "directory" : "file", path);
             return 0;
         }
 
@@ -25,7 +26,8 @@ int mkdir (char *path)
         basename++;
 
         // If path becomes '\0' then it means that first / is the last occurence that means path has to be /
-        node_t *to_create = search_for_node(path ? path : "/");
+        printf("else condition, %s\n", path);
+        node_t *to_create = search_for_node((strlen(path) != 0) ? path : "/");
 
         if (!to_create) {
             printf ("Error: Invalid path\n");
@@ -33,13 +35,18 @@ int mkdir (char *path)
         }
 
         // //Insert node
-        if (insert_node(to_create, basename, D) == 0) {
-            printf("Created directory %s\n", basename);
+        if (insert_node(to_create, basename, type) == 0) {
+            printf("Created %s %s\n", (type == D) ? "directory" : "file", basename);
             return 0;
         }
     }
 
     return 0;
+}
+
+int mkdir (char *path)
+{
+    return create_file(path, D);
 }
 
 int rmdir (char *path)
@@ -78,7 +85,42 @@ int pwd ()
 
 int touch (char *path)
 {
-    printf("touch\n");
+    if (strlen(path) == 0) {
+        printf ("Error: Invalid path\n");
+        return -1;
+    }
+
+    // Returns pointer of the last occurence of /
+    char *basename = strrchr(path, '/');
+
+    if (!basename) {
+        if (insert_node_in_cwd(path, F) == 0) {
+            printf("Created file %s\n", path);
+            return 0;
+        }
+
+        return -1;
+    } else {
+        //Currently basename points to the last / character
+        //Make the / to '\0' and then increment basename pointer
+        //This creates two strings path - with everything before the / and basename - with everything after the /
+        *basename = '\0';
+        basename++;
+
+        // If path becomes '\0' then it means that first / is the last occurence that means path has to be /
+        node_t *to_create = search_for_node(path ? path : "/");
+
+        if (!to_create) {
+            printf ("Error: Invalid path\n");
+            return -1;
+        }
+
+        // //Insert node
+        if (insert_node(to_create, basename, D) == 0) {
+            printf("Created directory %s\n", basename);
+            return 0;
+        }
+    }
 
     return 0;
 }
