@@ -4,6 +4,7 @@
 #include "tree.h"
 
 #include <stdio.h>
+#include <libgen.h>
 
 int mkdir (char *path);
 int rmdir (char *path);

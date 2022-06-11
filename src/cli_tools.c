@@ -2,8 +2,8 @@
 
 char line[LINE_LENGTH], command[COMMAND_LENGTH], pathname[PATH_LENGTH];
 
-char *cmd[] = { "mkdir", "rmdir", "cd", "ls", "pwd", "touch", "rm", "save", "reload", "menu"};
-int (*fptr[]) (char *) = { (int (*) ()) mkdir, rmdir, cd, ls, pwd, touch, rm, save, reload, menu };
+char *cmd[] = { "mkdir", "rmdir", "cd", "ls", "pwd", "touch", "rm", "menu"};
+int (*fptr[]) (char *) = { (int (*) ()) mkdir, rmdir, cd, ls, pwd, touch, rm, menu };
 
 void prompt (node_t *cwd)
 {

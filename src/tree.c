@@ -121,6 +121,41 @@ int insert_node_in_cwd (char *node_name, file_type_t node_type)
     return insert_node(cwd, node_name, node_type);
 }
 
+int remove_node (node_t *node)
+{
+    //Checking for Errors
+    if (node == NULL) {
+        printf("Error: Invalid path\n");
+        return -1;
+    } else if (node == root) {
+        printf("Error: Cannot delete root node\n");
+        return -1; 
+    } else if (node->type == D && node->child) {
+        printf("Error: Directory not empty\n");
+        return -1;
+    }
+
+    node_t *prev = node->parent, *to_delete;
+    if (prev->child == node) {
+        to_delete = node;
+        prev->child = node->sibling;
+    } else {
+        prev = prev->child;
+
+        while (prev->sibling != node)
+            prev = prev->sibling;
+
+        if (!prev)
+            return -1;
+
+        to_delete = node;
+        prev->sibling = node->sibling;
+    }
+
+    free(to_delete);
+    return 0;
+}
+
 int list_directory (char *path)
 {
     node_t *node = cwd;

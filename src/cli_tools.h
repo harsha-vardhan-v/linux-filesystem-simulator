@@ -9,7 +9,7 @@
 #define LINE_LENGTH 128
 #define COMMAND_LENGTH 16
 #define PATH_LENGTH 64
-#define FPTR_LENGTH 10
+#define FPTR_LENGTH 8
 
 extern char line[LINE_LENGTH], command[COMMAND_LENGTH], pathname[PATH_LENGTH];
 extern int (*fptr[]) (char *);

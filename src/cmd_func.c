@@ -39,7 +39,39 @@ int create_file (char *path, file_type_t type)
         }
     }
 
-    return 0;
+    return -1;
+}
+
+int delete_file (char *path, file_type_t type)
+{
+    if (strlen(path) == 0) {
+        printf ("Error: Invalid path\n");
+        return -1;
+    }
+
+    // Returns pointer of the last occurence of /
+    char *pathcpy = (char *) malloc(64 * sizeof(char));
+    strcpy(pathcpy, path);
+    node_t *to_delete = search_for_node(path);
+
+    if (!to_delete) {
+        printf ("Error: Invalid path\n");
+        free(pathcpy);
+        return -1;
+    } else if (to_delete->type != type) {
+        printf ("Error: Not a %s\n", (type == D) ? "directory" : "file");
+        free(pathcpy);
+        return -1;
+    }
+
+    if (remove_node(to_delete) == 0) {
+        printf ("Deleted %s %s\n", (type == D) ? "directory" : "file", basename(pathcpy));
+        free(pathcpy);
+        return 0;
+    }
+
+    free(pathcpy);
+    return -1;
 }
 
 int mkdir (char *path)
@@ -49,9 +81,7 @@ int mkdir (char *path)
 
 int rmdir (char *path)
 {
-    printf("rmdir\n");
-
-    return 0;
+    return delete_file(path, D);
 }
 
 int cd (char *path)
@@ -83,28 +113,13 @@ int pwd ()
 
 int touch (char *path)
 {
+    // Need to change search specifications accordingly
     return create_file(path, F);
 }
 
 int rm (char *path)
 {
-    printf("rm\n");
-
-    return 0;
-}
-
-int save (char *filename)
-{
-    printf("save\n");
-
-    return 0;
-}
-
-int reload (char *filename)
-{
-    printf("reload\n");
-
-    return 0;
+    return delete_file(path, F);
 }
 
 int menu (void)
@@ -117,10 +132,8 @@ int menu (void)
     printf("5) pwd\n");
     printf("6) touch\n");
     printf("7) rm\n");
-    printf("8) save\n");
-    printf("9) reload\n");
-    printf("10) menu\n");
-    printf("11) quit\n");
+    printf("8) menu\n");
+    printf("9) quit\n");
 
     return 0;
 }

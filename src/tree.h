@@ -21,6 +21,7 @@ node_t* search_cwd (char *name, file_type_t type);
 node_t* search_for_node (char *path);
 int insert_node (node_t *node, char *node_name, file_type_t node_type);
 int insert_node_in_cwd (char *node_name, file_type_t node_type);
+int remove_node (node_t *node);
 int list_directory (char *path);
 int change_directory (char *path);
 
