@@ -15,7 +15,7 @@ typedef struct node{
 
 void init ();
 void get_cwd_path (char *path);
-
+node_t* search_siblings (node_t *node, char *name, file_type_t type);
 node_t* create_node (char *name, file_type_t type);
 node_t* search_cwd (char *name, file_type_t type);
 node_t* search_for_node (char *path);

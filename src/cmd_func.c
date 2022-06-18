@@ -52,7 +52,20 @@ int delete_file (char *path, file_type_t type)
     // Returns pointer of the last occurence of /
     char *pathcpy = (char *) malloc(64 * sizeof(char));
     strcpy(pathcpy, path);
-    node_t *to_delete = search_for_node(path);
+    node_t *to_delete = search_for_node(pathcpy);
+
+    // If it is a file
+    // get the dirname and search for the directory
+    // and get the basename and use search siblings function to search the directory
+    if (type == F) {
+        strcpy(pathcpy, path);
+        to_delete = search_for_node(dirname(pathcpy));
+
+        if (to_delete) {
+            strcpy(pathcpy, path);
+            to_delete = search_siblings(to_delete->child, basename(pathcpy), F);
+        }
+    }
 
     if (!to_delete) {
         printf ("Error: Invalid path\n");

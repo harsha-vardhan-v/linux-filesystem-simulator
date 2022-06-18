@@ -75,7 +75,9 @@ node_t* search_for_node (char *path)
     name = strtok(path, "/");
 
     while (name && node) {
-        if (strcmp(name, "..") == 0) {
+        if (strcmp(name, ".") == 0)
+            node = cwd;
+        else if (strcmp(name, "..") == 0) {
             node = node->parent;
         } else {
             node = search_siblings(node->child, name, D);
